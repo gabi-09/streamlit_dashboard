@@ -1,0 +1,22 @@
+# Python ~
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+
+# Virtual environments ~
+venv/
+.venv/
+env/
+
+# Pycharm ~
+.idea/
+
+# Streamlit ~
+.streamlit/screts.toml
+
+# OS
+.DS_Store
+Thumbs.db
+
