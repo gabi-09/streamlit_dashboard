@@ -13,7 +13,7 @@ import streamlit as st
 
 # Constants ~~
 # data pathfile
-data_path = Path(__file__).parent / "datasets" / "proccessed" / "sustainability_merged.csv"
+data_path = Path(__file__).parent / "datasets" / "processed" / "sustainability_merged.csv"
 
 # renaming pollutant columns to more readable names
 pollutant_cols = {
@@ -27,6 +27,21 @@ pollutant_cols = {
 
 # Random EU countries for the chart to load by default
 default_countries = ["Germany", "Spain", "Sweden", "Portugal"]
+
+# Colourblind friendly palette (Okabe-Ito)
+# Using this palette as it is designed to be distinguishable for 3
+# most common types of colourblindness
+
+colourblind_palette = [
+    "#0072B2",  # blue
+    "#E69F00",  # orange
+    "#009E73",  # bluish-green
+    "#CC79A7",  # reddish-purple
+    "#56B4E9",  # sky blue
+    "#D55E00",  # vermillion
+    "#F0E442",  # yellow
+    "#000000",  # black
+]
 
 @st.cache_data
 def load_data():

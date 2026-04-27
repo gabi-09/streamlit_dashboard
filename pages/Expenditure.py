@@ -6,7 +6,7 @@ Expenditure page, health expenditure per capital across Europe!
 import plotly.express as px
 import streamlit as st
 
-from Utils import filtered_default_countries, load_data
+from Utils import colourblind_palette, filtered_default_countries, load_data
 
 # Page configuration ~
 st.set_page_config(
@@ -73,7 +73,7 @@ c1, c2, c3 = st.columns(3)
 
 # Highest spender
 with c1:
-    top = latest_snapshot.loc[latest_snapshot[expenditure_col].idmax()]
+    top = latest_snapshot.loc[latest_snapshot[expenditure_col].idxmax()]
     st.metric(
         label=f"Highest spender ({latest})",
         value=f"${top[expenditure_col]:,.0f}",
@@ -110,6 +110,7 @@ trend_fig = px.line(
         expenditure_col: "Health expenditure per capita (US$)",
         "Year": "Year",
     },
+    color_discrete_sequence= colourblind_palette,
 )
 
 # updating the layout
@@ -134,13 +135,20 @@ bar_fig = px.bar(
     orientation="h",
     text=expenditure_col,
     labels={expenditure_col: "Health expenditure per capita (US$)", "Country": "" },
+    color_discrete_sequence= colourblind_palette,
 
 )
 # updating the layout
+bar_fig.update_traces(
+    texttemplate="$%{text:,.0f}",
+    textposition="outside",
+    cliponaxis=False,
+)
+
 bar_fig.update_layout(
     margin=dict(l=10, r=10, t=10, b=10),
     height=max(300, 35*len(ranking)),
-    showlengend=False,
+    showlegend=False,
 )
 bar_fig.update_xaxes(tickprefix="$", tickformat=",")
 st.plotly_chart(bar_fig, use_container_width=True)

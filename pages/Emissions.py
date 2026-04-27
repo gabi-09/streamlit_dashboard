@@ -9,6 +9,7 @@ import streamlit as st
 
 # importing from Utils.py
 from Utils import (
+    colourblind_palette,
     pollutant_cols,
     filtered_default_countries,
     label_to_col,
@@ -99,6 +100,7 @@ trend_fig = px.line(
         selected_pollutant_col: f"{selected_pollutant_label} emissions (kt)",
         "Year": "Year",
     },
+    color_discrete_sequence= colourblind_palette,
 )
 
 # Showing all values for a given year, updating the layout
@@ -144,6 +146,7 @@ else:
             selected_pollutant_col : f"{selected_pollutant_label} emissions (kt)",
             "Country": "",
         },
+        color_discrete_sequence= colourblind_palette,
     )
 
     # formatting data labels to include commas, no decimals

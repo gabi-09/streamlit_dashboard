@@ -10,9 +10,7 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
-import plotly.express as px
 
-from pathlib import Path
 from Utils import load_data
 
 # Page configuration !!
@@ -24,7 +22,7 @@ st.set_page_config(
 )
 
 # load the dataset
-df= load_data
+df= load_data()
 
 # Header
 st.title("Sustainability Dashboard")
@@ -75,7 +73,7 @@ with col4:
         df["Year"] == latest_health, "Health_expenditure_per_capita_USD"
     ].mean()
     st.metric(
-        label=f"Average health spend per capital ({latest_health})",
+        label=f"Average health spend per capita ({latest_health})",
         value=f"{avg_health:,.0f}",
     )
 
@@ -116,6 +114,9 @@ st.caption(
     "Aggregate trends across all covered countries."
     "For country-level analysis, use the dedicated pages in the side bar~"
 )
+# Adding oclourblind friendly colours!
+pm25_colour = "#0072B2"
+deaths_colour = "#D55E00"
 
 # 2 column layout for matplotlib graphs
 plot_col1, plot_col2 = st.columns(2)
@@ -137,7 +138,7 @@ with plot_col1:
         yearly_pm25["PM2_5_kt"],
         marker="o",
         linewidth=2,
-        color="#c0392b"
+        color=pm25_colour
     )
 
     # shaded area under the line
@@ -176,7 +177,7 @@ with plot_col2:
     ax.bar(
         yearly_deaths["Year"],
         yearly_deaths["Premature_deaths"],
-        color="#2c3e50",
+        color=deaths_colour,
         alpha=0.8,
     )
 

@@ -5,7 +5,7 @@ Health Impact page - premature deaths and years of life lost from PM2.5
 import plotly.express as px
 import streamlit as st
 
-from Utils import filtered_default_countries, load_data
+from Utils import colourblind_palette, filtered_default_countries, load_data
 
 # Page configuration
 st.set_page_config(
@@ -96,7 +96,7 @@ latest = int(filtered["Year"].max())
 total_latest = int(filtered.loc[filtered["Year"]== latest, metric_col].sum())
 st.metric(
     label=f"Total {metric_label.lower()} across selected countries in {latest}",
-    value=f"{total_latest},",
+    value=f"{total_latest:,}",
 )
 
 # first chart
@@ -110,6 +110,7 @@ trend_fig = px.line(
     color="Country",
     markers=True,
     labels={metric_col: metric_label, "Year": "Year"},
+    color_discrete_sequence=colourblind_palette,
 )
 # updating the layout, showing all values for the year
 trend_fig.update_layout(
@@ -139,6 +140,7 @@ bar_fig = px.bar(
     orientation="h",
     text=metric_col,
     labels={ metric_col: metric_label, "Country": ""},
+    color_discrete_sequence=colourblind_palette,
 )
 
 # formatting the labels to include commas and sit outside the bars

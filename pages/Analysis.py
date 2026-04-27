@@ -6,7 +6,7 @@ Combined Analysis page, shows the relationship between emissions, deaths and spe
 import plotly.express as px
 import streamlit as st
 
-from Utils import pollutant_cols, label_to_col, load_data
+from Utils import colourblind_palette, pollutant_cols, label_to_col, load_data
 
 # Page configuration
 st.set_page_config(
@@ -53,7 +53,7 @@ y_col = st.sidebar.radio(
 y_label = y_metric_options[y_col]
 
 # restricting the year selector to years where all three columns have data!!
-required_cols = [pollutant_col, yll_col, spending_col]
+required_cols = [pollutant_col, y_col, spending_col]
 years_with_full_data = sorted(
     df.dropna(subset=required_cols)["Year"].unique()
 )
@@ -122,7 +122,7 @@ scatter_kwargs = dict(
     hover_data={
         pollutant_col: ":,.1f",
         y_col: ":,.0f",
-        spending_col: ":$,0f",
+        spending_col: ":$,.0f",
         "Country": False,
     },
     labels={
@@ -131,6 +131,7 @@ scatter_kwargs = dict(
         spending_col: f"Health spending per capita",
     },
     size_max=55,
+    color_discrete_sequence = colourblind_palette,
 )
 
 if show_trendline:
@@ -138,7 +139,7 @@ if show_trendline:
         snapshot,
         trendline="ols",
         trendline_scope="overall",
-        trendline_color_override="blue",
+        trendline_color_override="#000000",
         **scatter_kwargs,
     )
 else:
