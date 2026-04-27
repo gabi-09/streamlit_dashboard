@@ -13,6 +13,7 @@ import matplotlib.ticker as mticker
 import plotly.express as px
 
 from pathlib import Path
+from Utils import load_data
 
 # Page configuration !!
 st.set_page_config(
@@ -22,26 +23,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Load the data
-data_path = Path(__file__).parent / "datasets" / "processed" / "sustainability_merged.csv"
-
-@st.cache_data
-def load_data():
-    """Loading the merged sustainability dataset.
-    This is cached so the file is only read once per session!!
-    Returns the df"""
-    df = pd.read_csv(data_path)
-    return df
-
-df = None
-try:
-    df = load_data()
-except FileNotFoundError:
-    st.error(
-        f'The dataset cannot be found at "{data_path}"'
-        f'Run the cleaning data notebook first to generate the file!!'
-    )
-    st.stop()
+# load the dataset
+df= load_data
 
 # Header
 st.title("Sustainability Dashboard")
