@@ -82,7 +82,7 @@ with c1:
 
 # Lowest spender
 with c2:
-    bottom = latest_snapshot.loc[latest_snapshot[expenditure_col].idmin()]
+    bottom = latest_snapshot.loc[latest_snapshot[expenditure_col].idxmin()]
     st.metric(
         label=f"Lowest spender ({latest})",
         value=f"${bottom[expenditure_col]:,.0f}",
